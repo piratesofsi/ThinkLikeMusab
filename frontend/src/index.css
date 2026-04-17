@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+body{
+  background-color: black;
+}
+
+/* animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.8s ease-out;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* for Firefox */
+html {
+  scrollbar-width: none;
+}
