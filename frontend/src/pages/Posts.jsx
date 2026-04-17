@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { posts } from "../data/Post.js";
 import ReactMarkdown from "react-markdown";
 import { Copy, HandCoins } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const components = {
     h2: ({ children }) => (

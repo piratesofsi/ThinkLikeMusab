@@ -1,3 +1,5 @@
+import React from 'react';
+
 function About() {
     return (
         <div className="min-h-screen bg-black text-white px-4 py-16 md:px-6 lg:px-8">

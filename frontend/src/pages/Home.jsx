@@ -22,13 +22,13 @@ function Home() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition text-sm md:text-base">
+                    <Link to="/" className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition text-sm md:text-base">
                         Explore Posts
-                    </button>
+                    </Link>
 
-                    <button className="border border-gray-600 px-6 py-3 rounded-lg hover:bg-gray-800 transition text-sm md:text-base">
+                    <Link to="/about" className="border border-gray-600 px-6 py-3 rounded-lg hover:bg-gray-800 transition text-sm md:text-base">
                         Start Learning
-                    </button>
+                    </Link>
                 </div>
 
             </div>
