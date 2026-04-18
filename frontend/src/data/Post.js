@@ -3,8 +3,9 @@ export const posts = [
     id: "wiggle-sort",
     question: "Question 1",
     title: "ThinkLikeMusab #1 – Wiggle Sort",
-    tags:["Arrays","Sorting"],
+    tags: ["Arrays", "Sorting"],
     description: "From sorting intuition to greedy optimization",
+    leetcode: { number: 280, name: "Wiggle Sort", url: "https://leetcode.com/problems/wiggle-sort/" },
     content: `
 ## Problem
 
@@ -85,8 +86,9 @@ for (int i = 0; i < n - 1; i++) {
     id: "wiggle-sort-ii",
     question: "Question 2",
     title: "ThinkLikeMusab #2 – Wiggle Sort II",
-    tags:["Arrays","Sorting"],
+    tags: ["Arrays", "Sorting"],
     description: "Handling duplicates using reverse placement strategy",
+    leetcode: { number: 324, name: "Wiggle Sort II", url: "https://leetcode.com/problems/wiggle-sort-ii/" },
     content: `
 ## Problem
 
@@ -204,6 +206,7 @@ Instead of fixing violations, we prevent them by construction.
     title: "ThinkLikeMusab #3 – Binary Search",
     tags: ["Binary Search", "Arrays"],
     description: "Why halving the search space is always the move",
+    leetcode: { number: 704, name: "Binary Search", url: "https://leetcode.com/problems/binary-search/" },
     content: `
 ## Problem
 
@@ -259,6 +262,7 @@ return -1;
     title: "ThinkLikeMusab #4 – Two Sum",
     tags: ["Arrays", "Strings"],
     description: "From brute force O(n²) to HashMap O(n)",
+    leetcode: { number: 1, name: "Two Sum", url: "https://leetcode.com/problems/two-sum/" },
     content: `
 ## Problem
 
@@ -316,6 +320,7 @@ for (int i = 0; i < nums.length; i++) {
     title: "ThinkLikeMusab #5 – Reverse Linked List",
     tags: ["Linked Lists"],
     description: "Pointer manipulation made visual",
+    leetcode: { number: 206, name: "Reverse Linked List", url: "https://leetcode.com/problems/reverse-linked-list/" },
     content: `
 ## Problem
 
@@ -366,6 +371,7 @@ return prev;
     title: "ThinkLikeMusab #6 – Climbing Stairs",
     tags: ["Dynamic Programming"],
     description: "The DP pattern hiding inside a simple staircase",
+    leetcode: { number: 70, name: "Climbing Stairs", url: "https://leetcode.com/problems/climbing-stairs/" },
     content: `
 ## Problem
 
@@ -419,6 +425,7 @@ We don't need an array — just the last two values. Each step depends only on i
     title: "ThinkLikeMusab #7 – Valid Parentheses",
     tags: ["Strings", "Greedy"],
     description: "Why a stack is the natural fit for bracket problems",
+    leetcode: { number: 20, name: "Valid Parentheses", url: "https://leetcode.com/problems/valid-parentheses/" },
     content: `
 ## Problem
 
@@ -474,6 +481,7 @@ return stack.isEmpty();
     title: "ThinkLikeMusab #8 – Max Depth of Binary Tree",
     tags: ["Trees"],
     description: "Recursion that thinks one level at a time",
+    leetcode: { number: 104, name: "Maximum Depth of Binary Tree", url: "https://leetcode.com/problems/maximum-depth-of-binary-tree/" },
     content: `
 ## Problem
 
@@ -513,12 +521,13 @@ Every call handles just one node and delegates to its children. The recursion na
 `,
   },
   {
-  id: "mirror-distance",
-  question: "Question 9",
-  title: "ThinkLikeMusab #9 – Mirror Distance",
-  tags: ["Strings", "Arrays"],
-  description: "Reverse a number and find the absolute difference from the original",
-  content: `
+    id: "mirror-distance",
+    question: "Question 9",
+    title: "ThinkLikeMusab #9 – Mirror Distance",
+    tags: ["Strings", "Arrays"],
+    leetcode: { number: 3783, name: "Mirror distance of an Integer", url: "https://leetcode.com/problems/mirror-distance-of-an-integer/" },
+    description: "Reverse a number and find the absolute difference from the original",
+    content: `
 ## Problem
 
 Given a number \`n\`, find the **mirror** of it (reverse its digits), then return the absolute difference between the original and its mirror.
@@ -599,6 +608,6 @@ public int mirrorDistance(int n) {
 ## Key Takeaway
 
 > When a problem says "mirror" or "reverse" a number — think **modulo and division**, not strings. It's cleaner and teaches you how numbers actually work digit by digit.
-  `,
-},
+`,
+  },
 ];
