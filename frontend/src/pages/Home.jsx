@@ -1,3 +1,4 @@
+import Contribute from "../components/Contribute";
 import Footer from "../components/Footer";
 import { posts } from "../data/Post";
 import { Link } from "react-router-dom";
@@ -138,9 +139,14 @@ function Home() {
             </div>
 
           </div>
+          
         </section>
 
+          
+            <Contribute/>
         <Footer />
+
+        
 
       </div>
     </div>
