@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Navbar from "./components/Navbar";
 import Post from "./pages/Posts";
 import { Toaster } from "react-hot-toast";
+import Categories from "./pages/Categories";
 
 function App() {
   
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/Categories" element={<Categories />} />
           <Route path="/post/:id" element={<Post/>} />
         </Routes>
       </div>

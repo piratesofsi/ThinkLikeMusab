@@ -18,7 +18,7 @@ const Navbar = () => {
         <div className='hidden md:flex'>
           <ul className='flex justify-center items-center gap-6 text-gray-400'>
             <Link to="/"><li className='hover:text-white transition-all duration-200'>Home</li></Link>
-            <li className='hover:text-white transition-all duration-200'>Categories</li>
+            <Link to="/Categories" className='hover:text-white transition-all duration-200'>Categories</Link>
             <Link to="/about"><li className='hover:text-white transition-all duration-200'>About</li></Link>
           </ul>
         </div>
@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className='md:hidden bg-black border-t border-gray-800'>
           <ul className='flex flex-col items-center gap-4 py-4 text-gray-400'>
             <Link to="/" onClick={() => setIsOpen(false)}><li className='hover:text-white transition-all duration-200'>Home</li></Link>
-            <li className='hover:text-white transition-all duration-200'>Categories</li>
+            <Link to="/Categories" onClick={() => setIsOpen(false)}  className='hover:text-white transition-all duration-200'>Categories</Link>
             <Link to="/about" onClick={() => setIsOpen(false)}><li className='hover:text-white transition-all duration-200'>About</li></Link>
           </ul>
         </div>

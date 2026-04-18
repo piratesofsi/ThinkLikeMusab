@@ -3,6 +3,7 @@ export const posts = [
     id: "wiggle-sort",
     question: "Question 1",
     title: "ThinkLikeMusab #1 – Wiggle Sort",
+    tags:["Arrays","Sorting"],
     description: "From sorting intuition to greedy optimization",
     content: `
 ## Problem
@@ -84,6 +85,7 @@ for (int i = 0; i < n - 1; i++) {
     id: "wiggle-sort-ii",
     question: "Question 2",
     title: "ThinkLikeMusab #2 – Wiggle Sort II",
+    tags:["Arrays","Sorting"],
     description: "Handling duplicates using reverse placement strategy",
     content: `
 ## Problem
@@ -196,4 +198,407 @@ class Solution {
 Instead of fixing violations, we prevent them by construction.
 `,
   },
+  {
+    id: "binary-search",
+    question: "Question 3",
+    title: "ThinkLikeMusab #3 – Binary Search",
+    tags: ["Binary Search", "Arrays"],
+    description: "Why halving the search space is always the move",
+    content: `
+## Problem
+
+Given a sorted array, find the index of a target element in **O(log n)**.
+
+---
+
+## The Idea
+
+Every time we check the middle element:
+
+- If it equals target → done
+- If target is smaller → search left half
+- If target is larger → search right half
+
+We eliminate half the array each step.
+
+---
+
+## Code
+
+\`\`\`java
+int lo = 0, hi = nums.length - 1;
+
+while (lo <= hi) {
+    int mid = lo + (hi - lo) / 2;
+
+    if (nums[mid] == target) return mid;
+    else if (nums[mid] < target) lo = mid + 1;
+    else hi = mid - 1;
+}
+
+return -1;
+\`\`\`
+
+---
+
+## Why \`lo + (hi - lo) / 2\` and not \`(lo + hi) / 2\`
+
+> \`lo + hi\` can overflow if both are large integers. Subtracting first keeps the value safe.
+
+---
+
+## Complexity
+
+- Time → **O(log n)**
+- Space → **O(1)**
+`,
+  },
+  {
+    id: "two-sum",
+    question: "Question 4",
+    title: "ThinkLikeMusab #4 – Two Sum",
+    tags: ["Arrays", "Strings"],
+    description: "From brute force O(n²) to HashMap O(n)",
+    content: `
+## Problem
+
+Given an array and a target, return indices of two numbers that add up to target.
+
+---
+
+## Brute Force
+
+Check every pair.
+
+\`\`\`java
+for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+        if (nums[i] + nums[j] == target) return new int[]{i, j};
+    }
+}
+\`\`\`
+
+Time → **O(n²)**. Too slow for large inputs.
+
+---
+
+## Optimized (HashMap)
+
+Instead of searching for the complement, **store what we've seen**.
+
+### Insight
+
+> For each element \`x\`, we need \`target - x\`. If we've seen it before, we're done.
+
+\`\`\`java
+Map<Integer, Integer> map = new HashMap<>();
+
+for (int i = 0; i < nums.length; i++) {
+    int complement = target - nums[i];
+    if (map.containsKey(complement)) {
+        return new int[]{map.get(complement), i};
+    }
+    map.put(nums[i], i);
+}
+\`\`\`
+
+---
+
+## Complexity
+
+- Time → **O(n)**
+- Space → **O(n)** — for the HashMap
+`,
+  },
+  {
+    id: "reverse-linked-list",
+    question: "Question 5",
+    title: "ThinkLikeMusab #5 – Reverse Linked List",
+    tags: ["Linked Lists"],
+    description: "Pointer manipulation made visual",
+    content: `
+## Problem
+
+Reverse a singly linked list in-place.
+
+---
+
+## The Trick
+
+We need three pointers: \`prev\`, \`curr\`, \`next\`.
+
+At each step:
+- Save \`next\` before we break the link
+- Point \`curr.next\` backward to \`prev\`
+- Move both pointers forward
+
+\`\`\`java
+ListNode prev = null;
+ListNode curr = head;
+
+while (curr != null) {
+    ListNode next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+}
+
+return prev;
+\`\`\`
+
+---
+
+## Why \`prev\` starts as null
+
+> The last node of the original list becomes the new head. Its \`next\` should point to nothing — so \`null\` is the correct starting value for \`prev\`.
+
+---
+
+## Complexity
+
+- Time → **O(n)**
+- Space → **O(1)**
+`,
+  },
+  {
+    id: "climbing-stairs",
+    question: "Question 6",
+    title: "ThinkLikeMusab #6 – Climbing Stairs",
+    tags: ["Dynamic Programming"],
+    description: "The DP pattern hiding inside a simple staircase",
+    content: `
+## Problem
+
+You can climb 1 or 2 steps at a time. How many ways to reach step \`n\`?
+
+---
+
+## Observation
+
+To reach step \`n\`, you came from either:
+- Step \`n-1\` (took 1 step)
+- Step \`n-2\` (took 2 steps)
+
+So: \`ways(n) = ways(n-1) + ways(n-2)\`
+
+> This is just Fibonacci in disguise.
+
+---
+
+## Code
+
+\`\`\`java
+int a = 1, b = 1;
+
+for (int i = 2; i <= n; i++) {
+    int temp = a + b;
+    a = b;
+    b = temp;
+}
+
+return b;
+\`\`\`
+
+---
+
+## Why This Works
+
+We don't need an array — just the last two values. Each step depends only on its two predecessors.
+
+---
+
+## Complexity
+
+- Time → **O(n)**
+- Space → **O(1)**
+`,
+  },
+  {
+    id: "valid-parentheses",
+    question: "Question 7",
+    title: "ThinkLikeMusab #7 – Valid Parentheses",
+    tags: ["Strings", "Greedy"],
+    description: "Why a stack is the natural fit for bracket problems",
+    content: `
+## Problem
+
+Given a string with \`(\`, \`)\`, \`{\`, \`}\`, \`[\`, \`]\`, check if it's valid.
+
+Valid means every opening bracket has a matching closing bracket in the right order.
+
+---
+
+## Why Stack?
+
+> Opening brackets need to be matched by the **most recent** unmatched opener. That's exactly what a stack gives us — LIFO order.
+
+---
+
+## Code
+
+\`\`\`java
+Stack<Character> stack = new Stack<>();
+
+for (char c : s.toCharArray()) {
+    if (c == '(' || c == '{' || c == '[') {
+        stack.push(c);
+    } else {
+        if (stack.isEmpty()) return false;
+        char top = stack.pop();
+        if (c == ')' && top != '(') return false;
+        if (c == '}' && top != '{') return false;
+        if (c == ']' && top != '[') return false;
+    }
+}
+
+return stack.isEmpty();
+\`\`\`
+
+---
+
+## Why \`stack.isEmpty()\` at the end?
+
+> If unclosed openers remain in the stack, the string is invalid even if every closer matched correctly.
+
+---
+
+## Complexity
+
+- Time → **O(n)**
+- Space → **O(n)**
+`,
+  },
+  {
+    id: "max-depth-binary-tree",
+    question: "Question 8",
+    title: "ThinkLikeMusab #8 – Max Depth of Binary Tree",
+    tags: ["Trees"],
+    description: "Recursion that thinks one level at a time",
+    content: `
+## Problem
+
+Find the maximum depth of a binary tree.
+
+---
+
+## Recursive Insight
+
+> The depth of a tree = 1 + max(depth of left subtree, depth of right subtree)
+
+Base case: a null node has depth 0.
+
+---
+
+## Code
+
+\`\`\`java
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}
+\`\`\`
+
+---
+
+## Why This Works
+
+Every call handles just one node and delegates to its children. The recursion naturally explores all paths and bubbles up the longest one.
+
+---
+
+## Complexity
+
+- Time → **O(n)** — visits every node once
+- Space → **O(h)** — call stack height equals tree height
+`,
+  },
+  {
+  id: "mirror-distance",
+  question: "Question 9",
+  title: "ThinkLikeMusab #9 – Mirror Distance",
+  tags: ["Strings", "Arrays"],
+  description: "Reverse a number and find the absolute difference from the original",
+  content: `
+## Problem
+
+Given a number \`n\`, find the **mirror** of it (reverse its digits), then return the absolute difference between the original and its mirror.
+
+\`\`\`
+Input: 1234    Mirror: 4321
+
+Output: |1234 - 4321| = 3087
+\`\`\`
+
+---
+
+## How I Thought About It
+
+The word "mirror" is just a fancy way of saying **reverse the digits**.
+
+So the problem breaks into two steps:
+
+- Reverse the number
+- Subtract and return the absolute difference
+
+---
+
+## Reversing a Number
+
+No strings, no arrays. Pure math.
+
+### The trick
+
+- \`element % 10\` → gives the **last digit**
+- \`result * 10 + digit\` → shifts result left and appends the digit
+- \`element / 10\` → removes the last digit
+
+\`\`\`java
+private int findMirror(int element) {
+    int result = 0;
+    while (element > 0) {
+        int digit = element % 10;
+        result = result * 10 + digit;
+        element = element / 10;
+    }
+    return result;
+}
+\`\`\`
+
+### Dry run with 1234
+
+| element | digit | result |
+|---------|-------|--------|
+| 1234    | 4     | 4      |
+| 123     | 3     | 43     |
+| 12      | 2     | 432    |
+| 1       | 1     | 4321   |
+| 0       | —     | done   |
+
+---
+
+## Final Step
+
+\`\`\`java
+public int mirrorDistance(int n) {
+    int mirror = findMirror(n);
+    return Math.abs(n - mirror);
+}
+\`\`\`
+
+> \`Math.abs()\` handles the case where the mirror is larger than the original — so we always get a positive result.
+
+---
+
+## Complexity
+
+- Time → **O(d)** where d is the number of digits
+- Space → **O(1)**
+
+---
+
+## Key Takeaway
+
+> When a problem says "mirror" or "reverse" a number — think **modulo and division**, not strings. It's cleaner and teaches you how numbers actually work digit by digit.
+  `,
+},
 ];
