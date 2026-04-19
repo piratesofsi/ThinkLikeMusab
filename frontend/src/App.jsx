@@ -6,14 +6,17 @@ import Navbar from "./components/Navbar";
 import Post from "./pages/Posts";
 import { Toaster } from "react-hot-toast";
 import Categories from "./pages/Categories";
+import Contribute from "./components/Contribute";
+import ContributePage from "./pages/Contribute";
+import Admin from "./pages/Admin";
 
 function App() {
-  
+
   return (
     <BrowserRouter>
       <div className="bg-black text-white min-h-screen">
-          {/* toaster  */}
-          <Toaster
+        {/* toaster  */}
+        <Toaster
           position="top-center"
           toastOptions={{
             style: {
@@ -28,7 +31,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/Categories" element={<Categories />} />
-          <Route path="/post/:id" element={<Post/>} />
+          <Route path="/contribute" element={<ContributePage />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/post/:id" element={<Post />} />
         </Routes>
       </div>
     </BrowserRouter>

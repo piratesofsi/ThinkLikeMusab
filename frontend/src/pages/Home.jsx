@@ -1,11 +1,18 @@
+import { useState, useEffect } from "react";
+import { fetchApprovedPosts } from "../utils/api";
 import Contribute from "../components/Contribute";
 import Footer from "../components/Footer";
-import { posts } from "../data/Post";
 import { Link } from "react-router-dom";
 
-const recentPosts = posts.slice(-2).reverse();
-
 function Home() {
+  const [recentPosts, setRecentPosts] = useState([]);
+
+  useEffect(() => {
+    fetchApprovedPosts()
+      .then((data) => setRecentPosts(data.slice(-2).reverse()))
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-black text-white overflow-x-hidden">
 
@@ -36,13 +43,11 @@ function Home() {
         {/* ── Hero ── */}
         <section className="flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-28 sm:pt-40 pb-20 sm:pb-32">
 
-          {/* Badge */}
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs text-slate-400 tracking-widest uppercase">
             <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse shrink-0" />
             <span>DSA · Problem Solving · Intuition</span>
           </div>
 
-          {/* Heading — mobile first */}
           <h1 className="mt-2 text-[2.6rem] leading-tight sm:text-6xl md:text-7xl font-bold tracking-tight text-white">
             Think
             <span
@@ -59,7 +64,6 @@ function Home() {
             From confusion → clarity → code.
           </p>
 
-          {/* CTAs */}
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-none sm:w-auto">
             <Link
               to="/categories"
@@ -102,51 +106,55 @@ function Home() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {recentPosts.map((post) => (
-                <Link to={`/post/${post.id}`} key={post.id}>
-                  <div className="group h-full rounded-2xl border border-slate-800 bg-slate-950 p-5 sm:p-6 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1">
-                    <span className="text-[10px] sm:text-xs font-mono text-slate-600 tracking-widest">
-                      {post.question}
-                    </span>
-                    <h3 className="mt-2 sm:mt-3 text-sm sm:text-base font-semibold text-white group-hover:text-sky-300 transition-colors leading-snug">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-6">
-                      {post.description}
-                    </p>
-                    {post.tags && (
-                      <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5">
-                        {post.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 rounded-md text-[10px] sm:text-xs bg-slate-800 text-slate-400 border border-slate-700"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+            {recentPosts.length === 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[1, 2].map((i) => (
+                  <div key={i} className="h-48 rounded-2xl border border-slate-800 bg-slate-950 animate-pulse" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {recentPosts.map((post) => (
+                  <Link to={`/post/${post._id}`} key={post._id}>
+                    <div className="group h-full rounded-2xl border border-slate-800 bg-slate-950 p-5 sm:p-6 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1">
+                      <span className="text-[10px] sm:text-xs font-mono text-slate-600 tracking-widest">
+                        {post.question}
+                      </span>
+                      <h3 className="mt-2 sm:mt-3 text-sm sm:text-base font-semibold text-white group-hover:text-sky-300 transition-colors leading-snug">
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-6">
+                        {post.description}
+                      </p>
+                      {post.tags && (
+                        <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5">
+                          {post.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 rounded-md text-[10px] sm:text-xs bg-slate-800 text-slate-400 border border-slate-700"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-4 sm:mt-5 flex items-center gap-1.5 text-[10px] sm:text-xs text-sky-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                        Read post
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </div>
-                    )}
-                    <div className="mt-4 sm:mt-5 flex items-center gap-1.5 text-[10px] sm:text-xs text-sky-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      Read post
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            )}
 
           </div>
-          
         </section>
 
-          
-            <Contribute/>
+        <Contribute />
         <Footer />
-
-        
 
       </div>
     </div>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { posts } from "../data/Post.js";
+import { useState, useEffect } from "react";
+import { fetchApprovedPosts } from "../utils/api";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 
@@ -9,8 +9,15 @@ const DSA_TOPICS = [
 ];
 
 const Categories = () => {
+  const [posts, setPosts] = useState([]);
   const [active, setActive] = useState("All");
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    fetchApprovedPosts()
+      .then(setPosts)
+      .catch(console.error);
+  }, []);
 
   const filtered = posts.filter((p) => {
     const matchesTopic =
@@ -81,7 +88,13 @@ const Categories = () => {
         )}
 
         {/* Posts */}
-        {filtered.length === 0 ? (
+        {posts.length === 0 ? (
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-48 rounded-2xl border border-slate-800 bg-slate-950 animate-pulse" />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-slate-600">
             <span className="text-4xl mb-4">∅</span>
             <p className="text-sm uppercase tracking-widest">No posts found</p>
@@ -89,7 +102,7 @@ const Categories = () => {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {filtered.map((post) => (
-              <Link to={`/post/${post.id}`} key={post.id}>
+              <Link to={`/post/${post._id}`} key={post._id}>
                 <div className="group rounded-2xl border border-slate-800 bg-slate-950 p-6 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1">
                   <span className="text-xs font-mono text-slate-600 tracking-widest">{post.question}</span>
                   <h3 className="mt-3 text-base font-semibold text-white group-hover:text-sky-300 transition-colors leading-snug">

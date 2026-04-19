@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { posts } from "../data/Post.js";
+import { fetchApprovedPosts } from "../utils/api";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Copy } from "lucide-react";
@@ -21,18 +22,14 @@ const components = {
       {children}
     </p>
   ),
-  ul: ({ children }) => (
-    <ul className="my-4 space-y-2 pl-1">{children}</ul>
-  ),
+  ul: ({ children }) => <ul className="my-4 space-y-2 pl-1">{children}</ul>,
   li: ({ children }) => (
     <li className="flex items-start gap-3 text-slate-300 leading-6 md:leading-7 text-sm md:text-[1.05rem]">
       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
       <span>{children}</span>
     </li>
   ),
-  ol: ({ children }) => (
-    <ol className="my-4 space-y-4 pl-1 list-none">{children}</ol>
-  ),
+  ol: ({ children }) => <ol className="my-4 space-y-4 pl-1 list-none">{children}</ol>,
   blockquote: ({ children }) => (
     <div className="my-6 rounded-xl border border-sky-500/30 bg-sky-950/30 px-4 md:px-6 py-4 text-slate-200 leading-7 md:leading-8">
       <span className="block text-xs uppercase tracking-widest text-sky-400 mb-2 font-medium">Key Insight</span>
@@ -50,35 +47,19 @@ const components = {
       <div className="h-px flex-1 bg-slate-800" />
     </div>
   ),
-  strong: ({ children }) => (
-    <strong className="text-white font-semibold">{children}</strong>
-  ),
-
-  // ── Table ──
+  strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
   table: ({ children }) => (
     <div className="my-6 overflow-x-auto rounded-xl border border-slate-700/60">
       <table className="w-full text-sm text-slate-300">{children}</table>
     </div>
   ),
   thead: ({ children }) => (
-    <thead className="bg-slate-800/80 text-xs uppercase tracking-widest text-slate-400">
-      {children}
-    </thead>
+    <thead className="bg-slate-800/80 text-xs uppercase tracking-widest text-slate-400">{children}</thead>
   ),
-  th: ({ children }) => (
-    <th className="px-5 py-3 text-left font-medium">{children}</th>
-  ),
-  tbody: ({ children }) => (
-    <tbody className="divide-y divide-slate-800">{children}</tbody>
-  ),
-  tr: ({ children }) => (
-    <tr className="hover:bg-slate-800/40 transition-colors">{children}</tr>
-  ),
-  td: ({ children }) => (
-    <td className="px-5 py-3">{children}</td>
-  ),
-
-  // ── Code ──
+  th: ({ children }) => <th className="px-5 py-3 text-left font-medium">{children}</th>,
+  tbody: ({ children }) => <tbody className="divide-y divide-slate-800">{children}</tbody>,
+  tr: ({ children }) => <tr className="hover:bg-slate-800/40 transition-colors">{children}</tr>,
+  td: ({ children }) => <td className="px-5 py-3">{children}</td>,
   code: ({ inline, className, children }) => {
     const match = /language-(\w+)/.exec(className || "");
     const codeString = String(children).replace(/\n$/, "");
@@ -96,10 +77,7 @@ const components = {
             <span>{match[1]}</span>
             <div className="flex items-center gap-1.5">
               <div className="flex pr-4">
-                <button
-                  className="cursor-pointer hover:text-white transition-all duration-200"
-                  onClick={handleCopy}
-                >
+                <button className="cursor-pointer hover:text-white transition-all duration-200" onClick={handleCopy}>
                   <Copy size={14} />
                 </button>
               </div>
@@ -122,7 +100,26 @@ const components = {
 
 function Posts() {
   const { id } = useParams();
-  const post = posts.find((p) => p.id === id);
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchApprovedPosts()
+      .then((data) => {
+        const found = data.find((p) => p._id === id || p.id === id);
+        setPost(found || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="bg-black text-white min-h-screen flex items-center justify-center">
+        <p className="text-slate-500 text-sm animate-pulse">Loading...</p>
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -148,8 +145,7 @@ function Posts() {
             {post.description}
           </p>
 
-          {/* LeetCode link */}
-          {post.leetcode && (
+          {post.leetcode?.url && (
             <a
               href={post.leetcode.url}
               target="_blank"
@@ -181,7 +177,7 @@ function Posts() {
         </div>
 
       </div>
-    </main>
+    </main >
   );
 }
 

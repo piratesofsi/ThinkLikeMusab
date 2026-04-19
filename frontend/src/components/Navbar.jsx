@@ -19,6 +19,7 @@ const Navbar = () => {
           <li><Link to="/" className='hover:text-white transition-all duration-200'>Home</Link></li>
           <li><Link to="/categories" className='hover:text-white transition-all duration-200'>Categories</Link></li>
           <li><Link to="/about" className='hover:text-white transition-all duration-200'>About</Link></li>
+          <li><Link to="/contribute" className='hover:text-white transition-all duration-200'>Contribute</Link></li>
 
           {/* GitHub */}
           <li>
@@ -51,6 +52,7 @@ const Navbar = () => {
             <li><Link to="/" onClick={() => setIsOpen(false)} className='hover:text-white transition-all duration-200'>Home</Link></li>
             <li><Link to="/categories" onClick={() => setIsOpen(false)} className='hover:text-white transition-all duration-200'>Categories</Link></li>
             <li><Link to="/about" onClick={() => setIsOpen(false)} className='hover:text-white transition-all duration-200'>About</Link></li>
+            <li><Link to="/contribute" onClick={() => setIsOpen(false)} className='hover:text-white transition-all duration-200'>Contribute</Link></li>
             <li>
 
               <a
