@@ -1,5 +1,3 @@
-Got you — **pure Markdown only, no extra formatting, no IDs, no wrappers**.
-👉 Just copy everything below directly into `README.md`.
 
 ---
 
