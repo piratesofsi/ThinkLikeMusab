@@ -4,122 +4,195 @@ A DSA blog focused on **how to think**, not just how to solve.
 
 Most DSA content gives you the clean solution. This gives you the messy, honest thought process — the wrong attempts, the realizations, and finally the code.
 
-🔗 Live → https://think-like-musab.vercel.app
+🔗 **Live** → https://think-like-musab.vercel.app
 
 ---
 
-## What This Is
+## 🧠 What This Is
 
-ThinkLikeMusab is a personal DSA learning journal built as a full-stack blog. Every post documents a real problem-solving journey:
+ThinkLikeMusab is a full-stack DSA learning journal. Every post documents a real problem-solving journey:
 
-- The initial (often wrong) approach  
-- The insight that changed the direction  
-- The optimized solution with explanation  
-- Complexity analysis  
+* The initial (often wrong) approach
+* The insight that changed the direction
+* The optimized solution with explanation
+* Complexity analysis
 
----
-
-## Tech Stack
-
-| Layer         | Tech                         |
-|--------------|------------------------------|
-| Frontend      | React + Vite                 |
-| Styling       | Tailwind CSS v4              |
-| Routing       | React Router v6              |
-| Markdown      | ReactMarkdown + remark-gfm   |
-| Notifications | React Hot Toast              |
-| Icons         | Lucide React                 |
-| Deployment    | Vercel                       |
+Contributors can submit posts through the site. All submissions are reviewed before going live.
 
 ---
 
-## Project Structure
+## ⚙️ Tech Stack
+
+| Layer         | Tech                                 |
+| ------------- | ------------------------------------ |
+| Frontend      | React + Vite                         |
+| Styling       | Tailwind CSS v4                      |
+| Routing       | React Router v6                      |
+| Markdown      | ReactMarkdown + remark-gfm           |
+| Notifications | React Hot Toast                      |
+| Icons         | Lucide React                         |
+| Backend       | Node.js + Express                    |
+| Database      | MongoDB + Mongoose                   |
+| Auth          | JWT + bcryptjs                       |
+| Email         | Nodemailer                           |
+| Deployment    | Vercel (frontend) + Render (backend) |
+
+---
+
+## 📁 Project Structure
 
 ```
-frontend/
-├── src/
-│   ├── pages/
-│   │   ├── Home.jsx
-│   │   ├── Posts.jsx
-│   │   ├── Categories.jsx
-│   │   └── About.jsx
-│   ├── components/
-│   │   ├── Navbar.jsx
-│   │   ├── Footer.jsx
-│   │   └── Contribute.jsx
-│   └── data/
-│       └── Post.js        # All post content lives here
+ThinkLikeMusab/
+├── frontend/
+│   └── src/
+│       ├── pages/
+│       │   ├── Home.jsx
+│       │   ├── Posts.jsx
+│       │   ├── Categories.jsx
+│       │   ├── About.jsx
+│       │   ├── Contribute.jsx
+│       │   └── Admin.jsx
+│       ├── components/
+│       │   ├── Navbar.jsx
+│       │   ├── Footer.jsx
+│       │   └── Contribute.jsx
+│       └── utils/
+│           └── api.js
+└── backend/
+    ├── models/
+    │   ├── Post.js
+    │   └── User.js
+    ├── routes/
+    │   ├── posts.js
+    │   └── auth.js
+    ├── middleware/
+    │   └── auth.js
+    ├── config/
+    │   └── db.js
+    ├── seed.js
+    └── server.js
 ```
 
 ---
 
-## Running Locally
+## 🚀 Running Locally
+
+### 🔹 Frontend
 
 ```bash
-# Clone the repo
 git clone https://github.com/piratesofsi/ThinkLikeMusab.git
-
 cd ThinkLikeMusab/frontend
-
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
 ```
 
----
+Create `frontend/.env`:
 
-## Contributing
-
-Contributions are welcome. If you have a better explanation, a new problem, or a fix — open a PR.
-
-### How to add a new post
-
-1. Open `src/data/Post.js`
-2. Add a new object to the `posts` array:
-
-```js
-{
-  id: "your-problem-slug",
-  question: "Question 10",
-  title: "ThinkLikeMusab #10 – Problem Name",
-  tags: ["Arrays", "Sorting"],
-  description: "One line summary",
-  content: `
-## Problem
-...your markdown content here...
-  `
-}
+```env
+VITE_API_URL=http://localhost:5000
 ```
 
-3. Done — it will automatically appear everywhere.
+---
+
+### 🔹 Backend
+
+```bash
+cd ThinkLikeMusab/backend
+npm install
+npm run dev
+```
+
+Create `backend/.env`:
+
+```env
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASS=your_gmail_app_password
+FRONTEND_URL=http://localhost:5173
+PORT=5000
+```
 
 ---
 
-## Guidelines
+### 🌱 Seed the Database
 
-- Write in first person — document real thinking, not textbook answers  
-- Use `>` blockquotes for insights  
-- Include dry runs where helpful  
-- Always include time and space complexity  
+```bash
+cd backend
+node seed.js
+```
 
 ---
 
-## Available Tags
+## 🔗 API Routes
+
+| Method | Route                    | Auth | Description              |
+| ------ | ------------------------ | ---- | ------------------------ |
+| GET    | `/api/posts`             | No   | Get all approved posts   |
+| POST   | `/api/posts/submit`      | No   | Submit a post for review |
+| GET    | `/api/posts/admin`       | Yes  | Get all posts (admin)    |
+| PUT    | `/api/posts/approve/:id` | Yes  | Approve a post           |
+| PUT    | `/api/posts/reject/:id`  | Yes  | Reject a post            |
+| DELETE | `/api/posts/:id`         | Yes  | Delete a post            |
+| POST   | `/api/auth/login`        | No   | Admin login              |
+
+---
+
+## ✍️ Contributing
+
+Anyone can contribute a post through the site at `/contribute`.
+
+### 🔄 How it works
+
+1. Go to `/contribute`
+2. Fill in the title, description, tags, and content (Markdown)
+3. Submit — it goes into review
+4. Once approved, it appears on the site automatically
+
+---
+
+### 🧾 Writing Guidelines
+
+* Write in first person — document real thinking, not textbook answers
+* Use `>` blockquotes for key insights — they render as callout boxes
+* Include dry runs or examples where helpful
+* Always include time and space complexity
+
+---
+
+### 📝 Markdown Reference
+
+| Syntax            | Result          |     |   |       |
+| ----------------- | --------------- | --- | - | ----- |
+| `## Heading`      | Section heading |     |   |       |
+| `### Sub heading` | Sub section     |     |   |       |
+| `**bold**`        | Bold text       |     |   |       |
+| `` `code` ``      | Inline code     |     |   |       |
+| ```java           | Code block      |     |   |       |
+| `> insight`       | Callout box     |     |   |       |
+| `- item`          | Bullet list     |     |   |       |
+| `1. item`         | Numbered list   |     |   |       |
+| `---`             | Divider         |     |   |       |
+| `                 | col             | col | ` | Table |
+
+---
+
+## 🏷️ Available Tags
 
 `Arrays` · `Sorting` · `Graphs` · `Trees` · `Dynamic Programming` · `Greedy` · `Linked Lists` · `Strings` · `Binary Search`
 
 ---
 
-## Author
+## 👨‍💻 Author
 
-**Musab** — 3rd year Computer Engineering student, MERN stack developer  
+**Musab Shaikh**
+3rd Year Computer Engineering Student
+MERN Stack Developer
 
-GitHub: https://github.com/piratesofsi
+🔗 GitHub → https://github.com/piratesofsi
 
 ---
 
-## License
+## 📄 License
 
 MIT
